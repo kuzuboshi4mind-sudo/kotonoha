@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{% assign g = site.data.genres | where: "slug", page.genre | first %}
+{% assign works = site.posts | where: "genre", page.genre %}
+<section class="genre">
+  <header class="page-header">
+    <p class="eyebrow">{{ g.en }}</p>
+    <h1 class="page-title">{{ g.name }}</h1>
+    {% if g.description %}<p class="page-lead">{{ g.description }}</p>{% endif %}
+    <p class="count">{{ works.size }} 篇</p>
+  </header>
+
+  {% if works.size == 0 %}
+    <p class="empty">まだ作品がありません。</p>
+  {% elsif g.gallery %}
+    <ul class="gallery">
+      {% for post in works %}{% include gallery-item.html post=post %}{% endfor %}
+    </ul>
+  {% else %}
+    <ul class="work-list">
+      {% for post in works %}{% include work-item.html post=post %}{% endfor %}
+    </ul>
+  {% endif %}
+</section>

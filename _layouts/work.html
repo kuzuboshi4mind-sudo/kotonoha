@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{% assign g = site.data.genres | where: "slug", page.genre | first %}
+{% comment %} 縦書き：作品ごとの vertical があれば優先、なければジャンルの設定 {% endcomment %}
+{% if page.vertical == true or page.vertical == false %}
+  {% assign vertical = page.vertical %}
+{% else %}
+  {% assign vertical = g.vertical | default: false %}
+{% endif %}
+
+{% assign siblings = site.posts | where: "genre", page.genre %}
+{% for p in siblings %}{% if p.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+{% assign newer_i = idx | minus: 1 %}
+{% assign older_i = idx | plus: 1 %}
+
+<article class="work work--{{ page.genre }}{% if vertical %} is-vertical{% endif %}">
+  <header class="work-header">
+    <a class="genre-label" href="{{ '/' | append: page.genre | append: '/' | relative_url }}">{{ g.name }}</a>
+    <h1 class="work-title">{{ page.title }}</h1>
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y.%m.%d" }}</time>
+  </header>
+
+  {% if page.image %}
+  <figure class="work-image">
+    <button class="zoom" type="button" data-full="{{ page.image | relative_url }}" aria-label="拡大して見る">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+    </button>
+  </figure>
+  {% endif %}
+
+  {% if content != "" %}
+  <div class="work-body{% if vertical %} vertical{% endif %}" {% if vertical %}tabindex="0"{% endif %}>
+    {{ content }}
+  </div>
+  {% endif %}
+
+  {% if page.note %}
+  <aside class="work-note">{{ page.note | markdownify }}</aside>
+  {% endif %}
+
+  {% if siblings.size > 1 %}
+  <nav class="work-nav" aria-label="同じジャンルの作品">
+    {% if idx > 0 %}{% assign newer = siblings[newer_i] %}
+      <a class="work-nav__newer" href="{{ newer.url | relative_url }}"><small>次の作品</small>{{ newer.title }}</a>
+    {% else %}<span></span>{% endif %}
+    {% if older_i < siblings.size %}{% assign older = siblings[older_i] %}
+      <a class="work-nav__older" href="{{ older.url | relative_url }}"><small>前の作品</small>{{ older.title }}</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</article>
+
+<dialog class="lightbox" aria-label="拡大画像">
+  <img alt="">
+  <form method="dialog"><button class="lightbox__close" aria-label="閉じる">×</button></form>
+</dialog>

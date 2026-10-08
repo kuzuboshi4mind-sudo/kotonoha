@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="メニュー">
+      <span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav">
+      <ul>
+        {% for g in site.data.genres %}
+        <li><a href="{{ '/' | append: g.slug | append: '/' | relative_url }}"
+               {% if page.genre == g.slug %}aria-current="page"{% endif %}>{{ g.name }}</a></li>
+        {% endfor %}
+        <li class="site-nav__sep"><a href="{{ '/archive/' | relative_url }}" {% if page.url == '/archive/' %}aria-current="page"{% endif %}>目録</a></li>
+        <li><a href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' %}aria-current="page"{% endif %}>この場所について</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

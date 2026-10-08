@@ -1,0 +1,36 @@
+# ============================================================
+#  ジャンルの一覧
+#  - slug     : 英数字の識別子（作品ファイルの genre: に書く値）
+#  - name     : 画面に出るジャンル名
+#  - en       : 英語の小見出し
+#  - vertical : true にすると、そのジャンルの作品は縦書きで表示
+#  - gallery  : true にすると、一覧が画像のギャラリー表示になる
+#
+#  ジャンルを増やすときは、ここに追記し、
+#  genres/ フォルダに同じ形のページを1つ追加してください（README参照）
+#  並び順はそのままメニューの順番になります。
+# ============================================================
+
+- slug: poem
+  name: 詩
+  en: Poetry
+  description: 言葉の置き場所。
+  vertical: false
+
+- slug: tanka
+  name: 短歌
+  en: Tanka
+  description: 五七五七七のあいだに。
+  vertical: true
+
+- slug: illust
+  name: 絵
+  en: Drawings
+  description: 手で描いたもの。
+  gallery: true
+
+- slug: essay
+  name: 文集
+  en: Essays
+  description: 少し長い文章。
+  vertical: false

@@ -1,0 +1,56 @@
+# ============================================================
+#  サイト全体の設定
+#  ※ このファイルを変更したら、反映まで数分かかります
+# ============================================================
+
+title: 言の葉帖                 # サイト名
+subtitle: 詩と短歌と、手で描いたもの   # サイト名の下に出る一行
+author: あなたの名前             # 作者名（ペンネーム可）
+description: 詩・短歌・手描きのイラスト・文集を置いている、小さな文芸サイトです。
+
+# GitHub Pages の「ユーザー名.github.io/リポジトリ名」で公開する場合は
+# baseurl: "/リポジトリ名" にしてください。独自ドメインなら "" のまま。
+url: ""
+baseurl: ""
+
+# トップページに表示する「新しい作品」の数
+home_recent: 10
+
+# SNS など（不要なら空欄 "" に）
+links:
+  - name: X
+    url: ""
+  - name: Instagram
+    url: ""
+
+# ------------------------------------------------------------
+#  ここから下は通常さわらなくて大丈夫です
+# ------------------------------------------------------------
+lang: ja
+timezone: Asia/Tokyo
+permalink: /works/:year/:month/:title/
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: true   # 改行をそのまま改行として表示（詩・短歌向け）
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+feed:
+  path: feed.xml
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: work

@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<section class="hero">
+  <h1 class="hero__title">{{ site.title }}</h1>
+  <p class="hero__sub">{{ site.subtitle }}</p>
+</section>
+
+<nav class="genre-index" aria-label="ジャンル">
+  <ul>
+    {% for g in site.data.genres %}
+    {% assign n = site.posts | where: "genre", g.slug | size %}
+    <li>
+      <a href="{{ '/' | append: g.slug | append: '/' | relative_url }}">
+        <span class="genre-index__en">{{ g.en }}</span>
+        <span class="genre-index__name">{{ g.name }}</span>
+        <span class="genre-index__count">{{ n }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+<section class="recent">
+  <h2 class="section-title">新しく置いたもの</h2>
+  <ul class="work-list">
+    {% for post in site.posts limit: site.home_recent %}
+      {% include work-item.html post=post show_genre=true %}
+    {% endfor %}
+  </ul>
+  <p class="more"><a href="{{ '/archive/' | relative_url }}">すべての作品を見る →</a></p>
+</section>

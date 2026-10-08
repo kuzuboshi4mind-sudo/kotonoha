@@ -1,0 +1,19 @@
+---
+layout: default
+title: 目録
+permalink: /archive/
+---
+<section class="archive">
+  <header class="page-header">
+    <p class="eyebrow">Index</p>
+    <h1 class="page-title">目録</h1>
+    <p class="count">全 {{ site.posts.size }} 篇</p>
+  </header>
+  {% assign years = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+  {% for y in years %}
+  <h2 class="year">{{ y.name }}</h2>
+  <ul class="work-list">
+    {% for post in y.items %}{% include work-item.html post=post show_genre=true %}{% endfor %}
+  </ul>
+  {% endfor %}
+</section>
