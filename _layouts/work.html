@@ -30,7 +30,7 @@ layout: default
   {% endif %}
 
   {% if content != "" %}
-  <div class="work-body{% if vertical %} vertical{% endif %}" {% if vertical %}tabindex="0"{% endif %}>
+  <div class="work-body{% if vertical %} vertical{% endif %}" {% if vertical %}data-vertical{% endif %}>
     {{ content }}
   </div>
   {% endif %}

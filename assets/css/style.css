@@ -176,8 +176,17 @@ a:hover { color: var(--accent); }
 .work-body hr::before { content: "＊"; color: var(--ink-faint); }
 .work-body blockquote { margin: 2em 0; padding-left: 1.2em; border-left: 1px solid var(--rule); color: var(--ink-soft); }
 
-/* 詩：中央寄せのブロック、行は左揃え */
-.work--poem .work-body:not(.vertical) { width: fit-content; max-width: 100%; margin: 0 auto; }
+/* 詩・童話・短歌（横書き時）：中央寄せのブロック、行は左揃え */
+.work--poem .work-body:not(.vertical),
+.work--douwa .work-body:not(.vertical),
+.work--tanka .work-body:not(.vertical) { width: fit-content; max-width: 100%; margin: 0 auto; }
+
+/* スマホで横書き表示になったときは少し小さめにして、行の折り返しを減らす */
+@media (max-width: 520px) {
+  .work--poem .work-body:not(.vertical) p,
+  .work--douwa .work-body:not(.vertical) p,
+  .work--tanka .work-body:not(.vertical) p { font-size: .98rem; }
+}
 
 /* 文集：段落の字下げ */
 .work--essay .work-body p { text-indent: 1em; margin-bottom: 0; }
@@ -209,12 +218,7 @@ a:hover { color: var(--accent); }
 }
 .work.is-vertical { max-width: none; }
 
-/* 縦書きが横にはみ出すときの案内 */
-.scroll-hint {
-  text-align: center; font-size: .75rem; letter-spacing: .2em; color: var(--ink-faint);
-  margin: 1.2rem 0 0; transition: opacity .3s;
-}
-.scroll-hint.is-done { opacity: 0; }
+
 
 /* 短歌：1首ごとに行間を少し広く */
 .work--tanka .work-body.vertical { line-height: 2.8; }

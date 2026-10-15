@@ -24,27 +24,20 @@ if (box) {
   box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
 }
 
-// 縦書き：マウスホイールの縦スクロールを横スクロールに変換
-document.querySelectorAll('.work-body.vertical').forEach((el) => {
-  el.addEventListener('wheel', (e) => {
-    if (el.scrollWidth <= el.clientWidth || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-    const atStart = el.scrollLeft >= 0 && e.deltaY < 0;
-    const atEnd = Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 1 && e.deltaY > 0;
-    if (atStart || atEnd) return; // 端ではページを通常スクロール
-    e.preventDefault();
-    el.scrollLeft -= e.deltaY;
-  }, { passive: false });
-});
-
-// 縦書き：続きが隠れているときは案内を出す（左端までスクロールしたら消す）
-document.querySelectorAll('.work-body.vertical').forEach((el) => {
-  if (el.scrollWidth <= el.clientWidth + 24) return; // 余白程度のはみ出しは無視
-  const hint = document.createElement('p');
-  hint.className = 'scroll-hint';
-  hint.textContent = '← 左へスクロールすると続きがあります';
-  el.after(hint);
-  el.addEventListener('scroll', () => {
-    const end = Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 4;
-    hint.classList.toggle('is-done', end);
-  }, { passive: true });
-});
+// 縦書き：画面に収まるときだけ縦書きで表示し、
+// 収まらない端末（スマホなど）では横書きに切り替えて、全文がひと目で読めるようにする
+const verticals = document.querySelectorAll('.work-body[data-vertical]');
+const fitVertical = () => {
+  verticals.forEach((el) => {
+    el.classList.add('vertical');
+    const fits = el.scrollWidth <= el.clientWidth + 24; // 余白程度のはみ出しは許容
+    el.classList.toggle('vertical', fits);
+    el.closest('.work')?.classList.toggle('is-vertical', fits);
+  });
+};
+if (verticals.length) {
+  fitVertical();
+  document.fonts?.ready.then(fitVertical); // 文字の読み込み後にもう一度
+  let t;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(fitVertical, 150); });
+}
