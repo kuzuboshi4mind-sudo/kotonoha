@@ -9,6 +9,7 @@ permalink: /archive/
     <h1 class="page-title">目録</h1>
     <p class="count">全 {{ site.posts.size }} 篇</p>
   </header>
+  {% if site.show_dates %}
   {% assign years = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
   {% for y in years %}
   <h2 class="year">{{ y.name }}</h2>
@@ -16,4 +17,15 @@ permalink: /archive/
     {% for post in y.items %}{% include work-item.html post=post show_genre=true %}{% endfor %}
   </ul>
   {% endfor %}
+  {% else %}
+  {% for g in site.data.genres %}
+  {% assign works = site.posts | where: "genre", g.slug %}
+  {% if works.size > 0 %}
+  <h2 class="year archive-genre"><a href="{{ '/' | append: g.slug | append: '/' | relative_url }}">{{ g.name }}</a></h2>
+  <ul class="work-list">
+    {% for post in works %}{% include work-item.html post=post %}{% endfor %}
+  </ul>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
 </section>

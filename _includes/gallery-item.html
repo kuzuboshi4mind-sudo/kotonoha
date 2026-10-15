@@ -2,7 +2,7 @@
   <a href="{{ include.post.url | relative_url }}">
     <figure>
       <img src="{{ include.post.image | relative_url }}" alt="{{ include.post.title }}" loading="lazy">
-      <figcaption>{{ include.post.title }}<time>{{ include.post.date | date: "%Y.%m.%d" }}</time></figcaption>
+      <figcaption>{{ include.post.title }}{% if site.show_dates %}<time>{{ include.post.date | date: "%Y.%m.%d" }}</time>{% endif %}</figcaption>
     </figure>
   </a>
 </li>

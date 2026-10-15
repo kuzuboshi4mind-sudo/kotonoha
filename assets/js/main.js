@@ -35,3 +35,16 @@ document.querySelectorAll('.work-body.vertical').forEach((el) => {
     el.scrollLeft -= e.deltaY;
   }, { passive: false });
 });
+
+// 縦書き：続きが隠れているときは案内を出す（左端までスクロールしたら消す）
+document.querySelectorAll('.work-body.vertical').forEach((el) => {
+  if (el.scrollWidth <= el.clientWidth + 24) return; // 余白程度のはみ出しは無視
+  const hint = document.createElement('p');
+  hint.className = 'scroll-hint';
+  hint.textContent = '← 左へスクロールすると続きがあります';
+  el.after(hint);
+  el.addEventListener('scroll', () => {
+    const end = Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 4;
+    hint.classList.toggle('is-done', end);
+  }, { passive: true });
+});

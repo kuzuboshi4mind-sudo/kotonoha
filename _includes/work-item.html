@@ -1,11 +1,12 @@
 {% assign g = site.data.genres | where: "slug", include.post.genre | first %}
+{% assign cols = 0 %}{% if site.show_dates %}{% assign cols = cols | plus: 1 %}{% endif %}{% if include.show_genre %}{% assign cols = cols | plus: 1 %}{% endif %}
 <li class="work-item">
-  <a href="{{ include.post.url | relative_url }}">
-    <time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%Y.%m.%d" }}</time>
+  <a href="{{ include.post.url | relative_url }}" class="cols-{{ cols }}">
+    {% if site.show_dates %}<time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%Y.%m.%d" }}</time>{% endif %}
     {% if include.show_genre %}<span class="genre-label">{{ g.name }}</span>{% endif %}
     <span class="work-item__title">{{ include.post.title }}</span>
     {% unless include.post.image %}
-    <span class="work-item__excerpt">{{ include.post.excerpt | strip_html | strip_newlines | truncate: 48 }}</span>
+    <span class="work-item__excerpt">{{ include.post.excerpt | replace: "<br />", "　" | strip_html | strip_newlines | truncate: 48 }}</span>
     {% endunless %}
   </a>
 </li>

@@ -17,6 +17,12 @@
   description: 言葉の置き場所。
   vertical: false
 
+- slug: douwa
+  name: 童話
+  en: Children's Verse
+  description: こどもに語りかける、うたとおはなし。
+  vertical: false
+
 - slug: tanka
   name: 短歌
   en: Tanka
